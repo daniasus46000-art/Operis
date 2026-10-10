@@ -17,8 +17,9 @@
 /* Floating Launcher Button */
 .operis-bot-launcher {
   position: fixed;
-  bottom: 28px;
-  left: 28px;
+  bottom: 96px;
+  right: 28px;
+  left: auto;
   z-index: 9980;
   display: flex;
   align-items: center;
@@ -115,7 +116,8 @@
 .operis-bot-panel {
   position: fixed;
   bottom: 96px;
-  left: 28px;
+  right: 28px;
+  left: auto;
   width: 390px;
   max-width: calc(100vw - 36px);
   height: 580px;
@@ -131,7 +133,7 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(18px) scale(0.97);
-  transform-origin: bottom left;
+  transform-origin: bottom right;
   transition: opacity .25s ease, transform .25s cubic-bezier(.2,.8,.2,1), visibility .25s;
   font-family: inherit;
 }
@@ -479,18 +481,20 @@
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
   .operis-bot-launcher {
-    bottom: 22px;
-    left: 18px;
-    padding: 7px 12px 7px 8px;
+    bottom: 80px;
+    right: 20px;
+    left: auto;
+    padding: 6px 12px 6px 8px;
   }
   .operis-bot-launcher .launcher-text {
-    display: none; /* Icon-only on very narrow mobile screens */
+    display: none; /* Icon-only on mobile so it stays compact above WhatsApp */
   }
   .operis-bot-panel {
-    bottom: 80px;
+    bottom: 76px;
     left: 14px;
     right: 14px;
     width: auto;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 100px);
+    transform-origin: bottom right;
   }
 }
