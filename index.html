@@ -351,6 +351,35 @@ header.scrolled{box-shadow:0 10px 30px rgba(0,0,0,.05)}
 .contact-info-item a:hover{color:var(--accent-light)}
 .ci-full{grid-column:1 / -1}
 
+/* LOCATION CARD & RADAR PIN MARKER */
+.location-card{margin-top:16px;border-radius:12px;overflow:hidden;border:1px solid #33342e;background:#141512;transition:border-color .3s,transform .3s,box-shadow .3s;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.location-card:hover{border-color:#38b27d;transform:translateY(-2px);box-shadow:0 16px 36px rgba(56,178,125,.18)}
+.location-map-wrap{position:relative;display:block;width:100%;height:220px;overflow:hidden;text-decoration:none;color:inherit;cursor:pointer}
+.location-iframe{width:100%;height:100%;border:0;pointer-events:none;filter:invert(90%) hue-rotate(180deg) brightness(.85) contrast(1.15) saturate(.8);transition:transform .4s ease,filter .3s ease}
+.location-card:hover .location-iframe{transform:scale(1.02);filter:invert(90%) hue-rotate(180deg) brightness(.92) contrast(1.2) saturate(.95)}
+.location-marker-layer{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:12px;background:radial-gradient(circle at 50% 45%,rgba(16,17,14,.1) 0%,rgba(16,17,14,.65) 100%);pointer-events:none}
+.location-top-chip{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;background:rgba(16,17,14,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:5px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.12);font-size:10px;letter-spacing:.08em;font-weight:700;color:#fff}
+.location-top-chip .live-dot{width:7px;height:7px;border-radius:50%;background:#38b27d;box-shadow:0 0 8px #38b27d;animation:beaconPulse 1.8s infinite}
+@keyframes beaconPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.custom-pin-center{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3}
+.pin-radar,.pin-radar-2{position:absolute;border-radius:50%;pointer-events:none;border:1.5px solid rgba(56,178,125,.6)}
+.pin-radar{width:50px;height:50px;background:rgba(56,178,125,.22);animation:radarPing 2.2s cubic-bezier(0,0,.2,1) infinite}
+.pin-radar-2{width:82px;height:82px;background:rgba(56,178,125,.1);animation:radarPing 2.2s cubic-bezier(0,0,.2,1) infinite .75s}
+@keyframes radarPing{0%{transform:scale(.3);opacity:1}80%{transform:scale(1.5);opacity:0}100%{transform:scale(1.7);opacity:0}}
+.custom-pin-icon{position:relative;width:34px;height:44px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 6px 14px rgba(0,0,0,.75));animation:pinFloat 2.6s ease-in-out infinite;transform-origin:bottom center}
+@keyframes pinFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.custom-pin-icon svg{width:34px;height:44px;fill:#38b27d}
+.pin-shadow{width:16px;height:5px;background:rgba(0,0,0,.6);border-radius:50%;margin-top:-2px;filter:blur(2px)}
+.location-bottom-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(18,19,16,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:9px 12px;border-radius:9px;border:1px solid rgba(255,255,255,.1)}
+.coords-text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:11px;font-weight:700;color:#38b27d;letter-spacing:.02em;display:flex;align-items:center;gap:4px}
+.coords-sub{font-size:11px;color:#9e9d97;margin-top:1px}
+.maps-action-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;letter-spacing:.03em;color:#10110e;background:#38b27d;padding:6px 11px;border-radius:6px;white-space:nowrap;transition:background .2s,transform .2s}
+.location-card:hover .maps-action-pill{background:#4ade9f;transform:translateX(2px)}
+@media(max-width:600px){
+  .location-bottom-bar{flex-direction:column;align-items:flex-start;gap:8px}
+  .maps-action-pill{width:100%;justify-content:center}
+}
+
 .contact-form{display:flex;flex-direction:column;gap:18px;background:rgba(255,255,255,.02);padding:35px;border:1px solid #2c2d28}
 .form-title{font-size:20px;font-weight:500;margin-bottom:8px}
 .contact-form input,.contact-form textarea{width:100%;background:transparent;border:0;border-bottom:1px solid #45463f;color:white;padding:16px 0;outline:0;transition:border-color .3s}
@@ -1008,9 +1037,47 @@ footer{background:#0d0e0c;color:#85857e;padding:80px 0 30px}
             Door No. 2/226E, 1st Floor Thomas Arcade, NH 66<br>
             Near Kerala Gramin Bank, Varapuzha, Kochi, Kerala 683517
           </div>
-          <a href="https://maps.google.com/?q=Thomas+Arcade,+NH+66,+Varapuzha,+Kerala+683517" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#38b27d;margin-top:10px;text-decoration:underline">
-            Open in Google Maps ↗
-          </a>
+
+          <!-- INTERACTIVE LOCATION CARD & RADAR PIN MARKER -->
+          <div class="location-card">
+            <a href="https://www.google.com/maps/search/?api=1&query=10.088778,76.267194" target="_blank" rel="noopener noreferrer" class="location-map-wrap" title="Open 10°05'19.6&quot;N 76°16'01.9&quot;E in Google Maps">
+              <iframe class="location-iframe" 
+                src="https://www.openstreetmap.org/export/embed.html?bbox=76.260%2C10.083%2C76.274%2C10.094&amp;layer=mapnik&amp;marker=10.088778%2C76.267194" 
+                loading="lazy" 
+                title="Operis Location Map"
+                aria-label="Operis Office Location Map">
+              </iframe>
+
+              <div class="location-marker-layer">
+                <div class="location-top-chip">
+                  <span class="live-dot"></span>
+                  <span>LIVE LOCATION • OPERIS HQ</span>
+                </div>
+
+                <div class="custom-pin-center">
+                  <div class="pin-radar"></div>
+                  <div class="pin-radar-2"></div>
+                  <div class="custom-pin-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  </div>
+                  <div class="pin-shadow"></div>
+                </div>
+
+                <div class="location-bottom-bar">
+                  <div>
+                    <div class="coords-text">
+                      <svg viewBox="0 0 24 24" width="13" height="13" style="fill:#38b27d"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.93V19h-2v-2.07A6.002 6.002 0 015.07 13H3v-2h2.07A6.002 6.002 0 0111 5.07V3h2v2.07A6.002 6.002 0 0118.93 11H21v2h-2.07A6.002 6.002 0 0113 16.93zM12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>
+                      10°05'19.6"N 76°16'01.9"E
+                    </div>
+                    <div class="coords-sub">Thomas Arcade, NH 66, Varapuzha, Kochi</div>
+                  </div>
+                  <span class="maps-action-pill">
+                    Open in Google Maps ↗
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -1087,7 +1154,9 @@ footer{background:#0d0e0c;color:#85857e;padding:80px 0 30px}
           <span style="max-width:220px;line-height:1.5;color:#999891">
             Door No. 2/226E, 1st Floor Thomas Arcade, NH 66, Near Kerala Gramin Bank, Varapuzha, Kochi, Kerala 683517
           </span>
-          <span style="margin-top:8px;color:#38b27d;display:block">Varapuzha, Kochi</span>
+          <a href="https://www.google.com/maps/search/?api=1&query=10.088778,76.267194" target="_blank" rel="noopener noreferrer" style="margin-top:8px;color:#38b27d;display:inline-flex;align-items:center;gap:4px;font-size:12px;text-decoration:none">
+            📍 10°05'19.6"N 76°16'01.9"E ↗
+          </a>
         </div>
       </div>
     </div>
@@ -1117,7 +1186,7 @@ footer{background:#0d0e0c;color:#85857e;padding:80px 0 30px}
       <div><strong>Landline:</strong> <a href="tel:04842000204">04842000204</a></div>
       <div><strong>Email:</strong> <a href="mailto:info.operis@gmail.com">info.operis@gmail.com</a></div>
       <div><strong>Working Hours:</strong> <span>9:30 AM – 5:30 PM</span></div>
-      <div><strong>Headquarters:</strong> <span>Door No. 2/226E, Varapuzha, Kochi</span></div>
+      <div><strong>Headquarters:</strong> <a href="https://www.google.com/maps/search/?api=1&query=10.088778,76.267194" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline">Door No. 2/226E, Varapuzha (10°05'19.6"N 76°16'01.9"E) ↗</a></div>
     </div>
     <a class="btn" href="mailto:info.operis@gmail.com">Email Operis <span class="arrow">→</span></a>
   </div>
